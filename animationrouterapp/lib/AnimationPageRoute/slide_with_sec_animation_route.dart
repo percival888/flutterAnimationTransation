@@ -17,7 +17,7 @@ class SlideWithSecAnimationRoute<T> extends MaterialPageRoute<T> {
       child: SlideTransition(
         position: Tween<Offset>(
           begin: Offset.zero,
-          end: const Offset(1.0, 0),
+          end: const Offset(0, 1.0),
         ).animate(secondaryAnimation),
         child: child,
       ),

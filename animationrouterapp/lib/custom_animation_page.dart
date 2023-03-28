@@ -1,6 +1,6 @@
 import 'package:animationrouterapp/AnimationPage/size_animation_transition_page.dart';
 import 'package:animationrouterapp/CustomAnimationPageRoute/animated_rotate_route.dart';
-import 'package:animationrouterapp/CustomAnimationPageRoute/custom_cupertino_route_no_gesture.dart';
+import 'package:animationrouterapp/CustomAnimationPageRoute/custom_fade_route_with_gesture.dart';
 import 'package:flutter/material.dart';
 import 'AnimationPage/transition_page.dart';
 import 'AnimationPageRoute/with_out_animation_route.dart';
@@ -63,7 +63,7 @@ class CustomAnimationPage extends StatelessWidget {
             title: "滑动转场动画+手势",
             onPressed: () {
               Navigator.of(context)
-                  .push(CustomCupertinoRouteNoGesture(builder: (context) {
+                  .push(CustomFadeRouteWithGesture(builder: (context) {
                 return const TransitionPage();
               }));
             },

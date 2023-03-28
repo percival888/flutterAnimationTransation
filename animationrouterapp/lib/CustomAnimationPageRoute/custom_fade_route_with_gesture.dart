@@ -17,8 +17,8 @@ const int _kMaxDroppedSwipePageForwardAnimationTime = 800; // Milliseconds.
 // 如果用户在滑动过程中释放页面，则页面重置为原始位置的最长时间
 const int _kMaxPageBackAnimationTime = 300;
 
-class CustomCupertinoRouteNoGesture<T> extends CupertinoPageRoute<T> {
-  CustomCupertinoRouteNoGesture({required super.builder});
+class CustomFadeRouteWithGesture<T> extends CupertinoPageRoute<T> {
+  CustomFadeRouteWithGesture({required super.builder});
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
@@ -28,7 +28,7 @@ class CustomCupertinoRouteNoGesture<T> extends CupertinoPageRoute<T> {
       primaryRouteAnimation: animation,
       secondaryRouteAnimation: secondaryAnimation,
       linearTransition: linearTransition,
-      child: _CupertinoBackGestureDetector<T>(
+      child: _BackGestureDetector<T>(
         enabledCallback: () => _isPopGestureEnabled<T>(this),
         onStartPopGesture: () => _startPopGesture<T>(this),
         child: child,
@@ -79,10 +79,10 @@ class CustomCupertinoRouteNoGesture<T> extends CupertinoPageRoute<T> {
     return route.navigator!.userGestureInProgress;
   }
 
-  _CupertinoBackGestureController<T> _startPopGesture<T>(PageRoute<T> route) {
+  _BackGestureController<T> _startPopGesture<T>(PageRoute<T> route) {
     assert(_isPopGestureEnabled(route));
 
-    return _CupertinoBackGestureController<T>(
+    return _BackGestureController<T>(
       navigator: route.navigator!,
       controller: route.controller!, // protected access
     );
@@ -179,8 +179,8 @@ class CustomPageTransition extends StatelessWidget {
   }
 }
 
-class _CupertinoBackGestureDetector<T> extends StatefulWidget {
-  const _CupertinoBackGestureDetector({
+class _BackGestureDetector<T> extends StatefulWidget {
+  const _BackGestureDetector({
     super.key,
     required this.enabledCallback,
     required this.onStartPopGesture,
@@ -193,16 +193,16 @@ class _CupertinoBackGestureDetector<T> extends StatefulWidget {
 
   final ValueGetter<bool> enabledCallback;
 
-  final ValueGetter<_CupertinoBackGestureController<T>> onStartPopGesture;
+  final ValueGetter<_BackGestureController<T>> onStartPopGesture;
 
   @override
-  _CupertinoBackGestureDetectorState<T> createState() =>
-      _CupertinoBackGestureDetectorState<T>();
+  _BackGestureDetectorState<T> createState() =>
+      _BackGestureDetectorState<T>();
 }
 
-class _CupertinoBackGestureDetectorState<T>
-    extends State<_CupertinoBackGestureDetector<T>> {
-  _CupertinoBackGestureController<T>? _backGestureController;
+class _BackGestureDetectorState<T>
+    extends State<_BackGestureDetector<T>> {
+  _BackGestureController<T>? _backGestureController;
 
   late HorizontalDragGestureRecognizer _recognizer;
 
@@ -297,7 +297,7 @@ class _CupertinoBackGestureDetectorState<T>
 /// A controller for an iOS-style back gesture.
 ///
 /// This is created by a [CupertinoPageRoute] in response from a gesture caught
-/// by a [_CupertinoBackGestureDetector] widget, which then also feeds it input
+/// by a [_BackGestureDetector] widget, which then also feeds it input
 /// from the gesture. It controls the animation controller owned by the route,
 /// based on the input provided by the gesture detector.
 ///
@@ -306,11 +306,11 @@ class _CupertinoBackGestureDetectorState<T>
 ///
 /// The type `T` specifies the return type of the route with which this gesture
 /// detector controller is associated.
-class _CupertinoBackGestureController<T> {
+class _BackGestureController<T> {
   /// Creates a controller for an iOS-style back gesture.
   ///
   /// The [navigator] and [controller] arguments must not be null.
-  _CupertinoBackGestureController({
+  _BackGestureController({
     required this.navigator,
     required this.controller,
   })  : assert(navigator != null),
