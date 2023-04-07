@@ -90,7 +90,7 @@ class SystemAnimationPage extends StatelessWidget {
             },
           ),
           LineButton(
-            title: "大小动画转场（不生效）",
+            title: "大小动画转场",
             onPressed: () {
               Navigator.of(context).push(
                 PageRouteBuilder(
@@ -98,12 +98,14 @@ class SystemAnimationPage extends StatelessWidget {
                     return const TransitionPage();
                   },
                   transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                    return SizeTransition(
-                      sizeFactor: CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeInOut,
+                    return Align(
+                      child: SizeTransition(
+                        sizeFactor: CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeInOut,
+                        ),
+                        child: child,
                       ),
-                      child: child,
                     );
                   },
                   transitionDuration: const Duration(milliseconds: 2000),
